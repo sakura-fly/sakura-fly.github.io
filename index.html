@@ -1,11 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Document</title>
+    <meta charset="UTF-8">
+    <title>Title</title>
 </head>
 <body>
-	welcome
+<div style="text-align: center;">
+    <canvas width="800" height="800" style="border:1px solid #d3d3d3;" id="vectorCanvas"></canvas>
+</div>
+
 </body>
 </html>
+<script>
+    let canvas = document.getElementById('vectorCanvas')
+    let ctx = canvas.getContext('2d')
+
+    let heartx = 400
+    let hearty = 400
+
+    let diameter = 500
+
+    let high = diameter + Math.sqrt(3) / 4 * diameter
+
+    let a = {
+        x: -diameter / 2,
+        y: high / 2 - diameter / 2
+    }
+    let b = {
+        x: diameter / 2,
+        y: high / 2 - diameter / 2
+    }
+
+    let c = {
+        x: 0,
+        y: -high / 2 + diameter / 2 - Math.sqrt(3) / 4 * diameter
+    }
+
+    let d = {
+        x: 0,
+        y: high / 2 - diameter / 2
+    }
+    let e = {
+        x: -diameter / 4,
+        y: -Math.sqrt(3) / 8 * diameter
+    }
+    let f = {
+        x: diameter / 4,
+        y: -Math.sqrt(3) / 8 * diameter
+    }
+
+    drawCircle(d)
+    drawCircle(e)
+    drawCircle(f)
+
+    drawTriangle([a, b, c])
+    drawTriangle([d, e, f])
+
+    function drawTriangle(vertexes) {
+        ctx.beginPath()
+        for (let i in vertexes) {
+            i = Number(i)
+            ctx.lineTo(getX(vertexes[i].x), getY(vertexes[i].y))
+            if (i === vertexes.length - 1) {
+                ctx.lineTo(getX(vertexes[0].x), getY(vertexes[0].y))
+            }
+        }
+        // ctx.strokeStyle = l.color
+        ctx.stroke()
+    }
+
+    function drawCircle(centre) {
+        ctx.beginPath();
+        ctx.arc(getX(centre.x), getY(centre.y), diameter / 2, 0, 2 * Math.PI);
+        ctx.stroke();
+    }
+
+    function getX(x) {
+        return heartx + x
+    }
+
+    function getY(y) {
+        return hearty - y
+    }
+</script>
